@@ -1,0 +1,16 @@
+Makefile
+build
+debian/.debhelper
+debian/debhelper-build-stamp
+debian/dream.substvars
+debian/dream
+debian/files
+dream.pro.user
+*.kdev4
+*.orig
+.qmake.stash
+dream
+moc/
+obj/
+ui/
+qrc_icons.cpp
