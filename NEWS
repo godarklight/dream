@@ -1,0 +1,18 @@
+The Dream development team today releases Dream version 2.2.
+
+Dream is a DRM (Digital Radio Mondiale) software receiver and decoder.
+It is a very complete receiver, featuring compliant decoding of HE AAC v2
+audio streams, journaline decoding, a feature rich statistics section
+providing invaluable information about the streams being received, and automatic
+update of available stations from the web, among several other features.
+
+It also features a limited transmission mode, that uses the FAAC AAC encoder.
+
+Dream is multi-platform and has been tested on OSX, Win32 and Linux.
+
+Changes since version 2.1:
+
+  - Added support for fdk-aac v2
+  - Added support for modern compilers
+
+The source files are available here: http://drm.sourceforge.net

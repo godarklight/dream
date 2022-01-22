@@ -1,0 +1,171 @@
+/******************************************************************************\
+ * Parts (c) 2001-2003 Technische Universitaet Darmstadt, Institut fuer 
+ * Nachrichtentechnik Fachbereich Uebertragungstechnik
+ * Parts Copyright (c) 2003, 2004 Fraunhofer IIS, Erlangen, Germany
+ * Parts Copyright (c) 2004 - 2009 British Broadcasting Corporation
+ *
+ * Originally written by:
+ *  Volker Fischer, Alexander Kurpiers
+ *
+ * Additional contributions by:
+ * Stephane Fillod, Andrea Russo, Julian Cable, Andrew Murphy, Oliver Haffenden,
+ * Tomi Manninen, Robert Kesterson
+ *
+ ******************************************************************************
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+\******************************************************************************/
+
+
+Introduction
+------------
+
+Digital Radio Mondiale (DRM) is the digital radio standard for the long-,
+medium- and short-wave bands. The system is defined by ES 201 980 which
+is freely downloadable from the European Telecommunications Standards Insitute
+(ETSI). The system was designed by a consortium in co-operation with the 
+International Telecommunication Union (ITU). It offers radio stations and
+new service providers access to the multimedia age with small bit rates for 
+large target areas and long distances.
+
+For more information, visit www.drm.org. 
+
+
+The bandwidth of a DRM bandpass signal is less than 20 kHz and the number of 
+carriers used in the OFDM-modulation is relatively small (max. 460). These
+features motivate a real-time software implementation of a DRM-receiver on a 
+conventional personal computer (PC) using the sound card as the input and output 
+device. A long, medium and short wave front-end with an intermediate frequency 
+(IF) between 5 kHz and 15 kHz is used to receive the DRM signal. Any commercial 
+front-end with an IF of 455 kHz should be usable by adding a 455 kHz to 12 kHz 
+adaptor (asumed the receiver bandwith is sufficient for a DRM signal). 
+Documentation of receiver modifications for DRM reception can be found at 
+www.drmrx.org. 
+
+
+With this software project we intend to implement a working software receiver 
+with, at least, the basic features. Since this project is created at a university 
+and the fundamental idea of such an institution is to teach and stimulate the 
+creativity, this source-code is free under the GNU-General Public License (GPL). 
+Dream is a development project which uses the open source model to improve DRM 
+technology. The main aim of this project is to implement and test new research 
+results on an existing system, whereby the synchronization and channel 
+estimation is of special interest. 
+
+
+The programming-language is C++. Start of the project was June 2001. The
+software runs on Microsoft Windows, Linux and OSX
+
+
+Although this software is distributed as free software under the terms of the
+GPL this does not mean that its use is free of rights of others. The use may
+infringe third party IP and thus may not be legal in some countries.
+
+
+The intended audience of the Dream software are people who are interested in
+how to decode a DRM stream and want to learn from the algorithms used in this
+software and people who want to help us improving the performance of the receiver
+and the source code.
+
+
+Homepage:
+http://drm.sourceforge.net
+
+
+
+
+Dream code Code-Style definitions
+---------------------------------
+
+# GENERAL CONVENTIONS
+
+- tab size: 4 (taps are NOT replaced by spaces)
+- maximum line width: 80 characters
+
+
+
+# USAGE OF BRACKETS
+
+- if, while, do commands:
+
+[command1]
+{
+	/* Code 1 */
+
+	[command2]
+	{
+		/* Code 2 (more than one line) */
+	}
+}
+
+- exception: if only one line of code, do not use brackets:
+
+[command1]
+	/* Code (only one line) */
+
+- switch command:
+
+switch ([variable])
+{
+case [condition1]:
+	/* Code for condition 1 */
+	break;
+
+case [condition2]:
+	/* Code for condition 2 */
+	break;
+}
+
+
+
+# COMMENTS
+
+- Comments start with capital letters
+- regular comments shall be placed in front of the command:
+
+/* This is the comment for the next line */
+[command]
+
+- short comments can be placed right after the command:
+
+[command] /* Short comment (1 space between command and comment) */
+
+- long comments (e.g. a function description):
+
+/*
+	This is a long description for the following section of code. The text is
+	written with increased indent whereby the indent is realized with tabs.
+*/
+
+- sections comments (there are always two empty lines before a section):
+
+/******************************************************************************\
+* This is a section                                                            *
+\******************************************************************************/
+
+/* This is a subsection *******************************************************/
+
+/* This is a subsubsection -------------------------------------------------- */
+
+
+
+# PREPROCESSOR DIRECTIVES
+
+- insert spaces if preprocessor directives are in if condition:
+
+#ifdef HAVE_CONFIG_H
+# include "config.h" /* Here, a space is included between # and the command */
+#endif

@@ -1,0 +1,18 @@
+Installation Instructions for the Dream Software
+------------------------------------------------
+
+This version of Dream has been tested with the following compilers
+
+* Windows
+
+ * Microsoft Visual Studio 17.0
+ 
+* Linux
+
+ * g++
+
+* OSX
+
+ * XCode
+
+Detailed build instructions are available at drm.sourceforce.net.

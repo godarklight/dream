@@ -1,0 +1,253 @@
+2.2
+ - support for modern compilers
+ - support for fdk-aac v2 for HE-AACv2
+2.1
+ - Tickets #170, #183, #184, #155, #177, #178
+ - added 2X upsampler
+ - added console terminal user interface
+ - added manual carrier freq input, bw slider now update only the bw marker for AM mode
+ - added some Android capability
+ - added speex noise reduction to am demod gui and some code cleanup
+ - added speexdsp resampler
+ - added support for Opus codec
+ - added system tray icon 
+ - improved OSX and BSD compatibility
+ - improved station activity settings.
+ - improvements to RSCI.
+ - make RSCI work in console mode, removing all Qt dependencies.
+ - optimized I/Q split input mode
+ - proper handling of frequencies for analog demod
+ - set the default mlc iteration to one
+ - transmitter now correctly transmits audio in console mode
+1.17
+ - Add support for running a schedule. Not finished - needs to turn logging off during idle schedule periodsZ
+ - GUI changes
+ -   added RSCI file menu options
+ -   added "Open Sound File" in menu
+ -   Broadcast Website viewer enhancements
+ -   Slideshow viewer enhancements
+ -   Stations Dialog enhancements
+ -     stations can be sorted by online/offline
+ -     add a message box if the schedule file can't be found.
+ -   AM Main Window Enhancements
+ -     fixed bandwidth slide bar not updating on sample rate change.
+ -   Evaluation Dialog now updates on logging change
+ - Command line enhancements
+ -  fileio fixes
+ -  add test command line parameter
+ -  add reverb command line parameter
+ -  add samplerate command line parameter
+ -  add command line parameter for schedule file.
+ - FAAC/FAAD2 can now be detected and loaded at runtime
+ - FAAC is now checked if it was buit with DRM support
+ - Support for multiple sample rates
+ - added 2 new I/Q input mode.
+ - added L-R input signal mode, useful for differential signal
+ - added resampler to audio file in
+ - added sample rate selection in sound card menu
+ - changed TimeSync filter data to const, reformated the filter code
+ - added console profile with no dependency to qt
+ - pulseaudio: added reporting of recording overrun error, support for stdin/stdout sound device
+ - Transmitter enhancements - transmit current time, added high quality I/Q output, added +14dB amplified output
+ - Windows mmsystem sound updates, simplified process priority
+1.16
+  - Full support of Qt4 and Qwt 5/6
+  - Default use of fftw3
+  - Better looking logo and icons
+  - PulseAudio sound interface (linux)
+  - Various bug fixes, code cleanups and user interface changes
+  - Transmitter Enhancements
+    - configuration stored in Dream.ini
+    - ability to transmit the current time
+    - fix for restart bug
+    - provide a clean spectrum when stopping
+    - fix for problems with MOT slide show
+    - stop MOT Slide Show encoding the full path of files
+  - Receiver Enhancements
+    - fix pcap reading
+  ` - prevent crash when EPG item has no duration
+    - prevent crash with HVXC encoded service
+    - fix direct frequency input
+    - fix support for DRM Logger
+    - add missing SDC information to MOT service display
+    - additional receiver state stored in Dream.ini
+    - better frequency resolution and dynamic range of audio spectrum plot
+    - support of links in text messages (qt4 only)
+    - added display of UTC offset on received time in system evaluation dialogue
+
+1.15
+  - moved from CVS to subversion
+
+1.14
+  - allows building with Qt4
+
+1.13
+ 
+  - change name of faac and faad libraries to permit cooexistance of normal and drm versions
+  - support run-time loading of faac and faad libraries to enable binary dream downloads
+  - support of WinRadio G313 on linux
+  - new FM mode
+  - New "experimental" data mode
+  - don't assume audio is scaled to 32768 peak
+  - improved Mutex locking on CParameter
+  - move signal strength monitoring from CDrmReceiver
+  - PSD Measurements are configurable in the ini file
+  - improved termination state machine (CParameter.bRunThread replaced by CParameter.eRunState)
+  - Make sure frequency gets in the log file when retuning
+  - improved code for version numbers, especially in rinf RSCI tag
+  - ability to send now/next EPG data to an external program via UDP
+  - improved Journaline decoding from Fraunhofer
+  - save Tx/Rx mode in ini file
+  - better use of Qt I18N features
+  - Don't send sdc_ tag if tag packet is empty
+  - tcp mode for RSCI/MDI subscription
+  -prefix source/destination with t
+  - Power Impulse response tag in RSCI
+  - # suffix in pcap file name should allow filtering on UDP port (does this work yet?)
+  - report AF sequence number discontinuities with print statements
+  - handle ETSI filenames for EPG files as well as the old dream ones.
+ 
+1.12
+
+  - Fixed problem where users directories being cleared when clearing cache
+  - Fixed timezone problems with EPG
+  - Fixed problem when EPG is 4th service
+
+1.11
+
+  - Fix log file to add header when retuning
+  - Improvements to EPG Decoding
+
+1.10.9
+
+  - Implementation of the ETSI Receiver Status and Control Interface (RSCI)
+  - Fully integrated ETSI compliant Journaline Decoding from Fraunhofer IIS
+  - Decoding and display of AM Signalling System (AMSS) data
+  - Filters added to Station Dialogue
+  - Signalstrength added to GUI and logfiles (RXL)
+  - Support of mobile logging via an interface to gpsd
+  - Support for building and running on OSX
+  - Support for Code::Blocks on Microsoft Windows
+  - Support for Visual Studio Express 2008 on Microsoft Windows
+  - Optional Support of libsndfile for reading different audio file formats
+  - Improvement to MOT decoding when directory is divided into more segments
+
+1.6.25
+
+  - Decoding and display of ETSI Electronic Programme Guide (EPG)
+  - Display of Alternative Frequency (AFS) data
+  - Support for receiving multicast MDI/RSCI for reception
+  - Optional support for reading pcap capture files for MDI/RSCI reception
+  - Support for Dev-C++/MinGW on Microsoft Windows
+
+1.2.4
+
+  - added reverbration effect for masking audio drop-outs. A switch was
+    added to the evaluation dialog to enable or disable this feature.
+  - added error detection for SDC channel (show yellow light (LED) if SDC data seems to be corrupted)
+  - bug fix: when SDC data was used completley the CRC was read as length
+    of entity data which was wrong. Now, the length of data read is checked
+    whether it has reached the total number of bits available
+  - do not show bit-rate in service selector label if bit-rate is zero
+  - apply hanning window to input spectrum plot
+  - use lower value of Doppler for initialization phase of Wiener filter in
+    time direction (aliasing peaks in impulse response are lower now are
+    re-synchronization)
+  - use shorter filter lengths for Wiener filtering for channel estimation
+    in time direction
+  - improved initialization phase for DRM frame synchronization
+  - Only use DRM frame synchronization based on time pilots since the
+    algorithm based on the impulse response does not perform well in
+    case of a very long IR
+  - added waterfall display for input spectrum
+  - use smaller buffers to speed up audio output after re-synchronization
+  - for long symbol interleaving, try to decode data before the whole
+    interleaver buffer is filled by setting the uninitialized symbols
+    to erasure
+  - bug fix for time-sync-acquisition initialization
+  - moved bandpass-filter and frequency offset correction from OFDM
+    module in Frequency-Sync-Acquisition module,
+  - improved bandpass filter for receiver -> better interfere rejection
+    BUT: under normal conditions, this filter will degrade the performance
+    a little bit since it attenuates the OFDM carriers at the borders a bit
+  - store input data vector which is used for frequency offset acquisition
+    and output entire data vector when acquisition was successful -> speeds
+    up audio output when re-synchronization is needed
+  - fixed problem with high CPU utilization when no DRM signal was received
+  - WINDOWS: make the software more robust against high CPU utilization by
+    other applications by increasing the thread priority of the Dream signal
+    processing thread
+  - bug fix: time sync Hilbert filter must be shifted to virtual intermediate
+    frequency
+  - added informations about robustness mode, MSC scheme, protection
+    levels in log long (a log file which is generated parallel to the
+    standard log file (compatible to the DRM software radio))
+  - display sample rate offset in ppm, too
+  - do not show mode , protection levels and MSC constellation in log long
+    until FAC CRC was correct
+  - resize windows fix for Linux by Andrea Russo
+  - add name of picture in tool-tip (in case a MOTSlideShow picture is shown).
+    The tool-tip is shown when the user moves the mouse over the picture
+  - Journaline pages can be saved as HTML (patch from Andrea Russo)
+  - added preview for stations dialog, thanks to Andrea Russo for his patch!
+    A new menu was added for setting the preview time. If a DRM transmitter
+    will transmit no later than the preview time but is not active, an orange
+    marker is shown next to this transmission (in the list)
+  - improved averaging of estimation of impulse response: the time shift is
+    considered more exactly (sample rate offset estimation should be
+    improved, too)
+  - added new column to stations list showing the days the transmission is
+    active. This code is based on a patch by Andrea Russo
+  - added Weighted Modulation Error Ratio (WMER) and MER calculation based
+    on the MSC cells. The values are shown in the evaluation dialog
+  - added SDC data entity type 3 (information is not used right now) and some
+    more error checking
+  - added SDC data entity type 4 (information is not used right now)
+  - added SDC type 7 (not used right now)
+  - added class for storing alternative frequencies transmitted in SDC type 3
+  - store plot type selection for evaluation dialog
+
+1.2.2
+  - Lots of changes for AM demodulation: a separate main window for AM, noise reduction,
+    PLL and CW demodulation, changed AM bandpass filter
+  - SNR spectrum plot implemented in DRM-mode, which information is used to improve
+    reception under interference situations
+  - Added history plots for SNR/Audio, Delay/Doppler and Frequency/Sample Rate
+  - Small improvements and bug fixes
+
+1.1
+  - AAC encoder for Dream TX (using faac library)
+  - jpg-support for Windows version (using Freeimage library)
+  - including Hamlib library for front-end remote control
+  - Journaline library
+  - Dream init file, storing some settings and window sizes/positions
+
+1.0.6
+  - Improved AM demodulation (introduced new window) -> AM, USB, LSB; different filters
+  - Stations dialog with update function (using DRM schedule powered by Klaus Schneider www.drm-dx.de)
+  - Remote control for different front-ends (e.g., Winradio, AOR7030, Elektor)
+  - GUI for DRM transmitter (start with command line flag '-t')
+  - MOT Slide Show encoder + lots of fixes for DRM transmitter
+
+1.0
+  - New SNR estimation
+  - New algorithm for sample rate offset estimation
+  - I/O interface indicator
+
+0.9.3
+  - SBR support (needs new faad2 library)
+  - AM mode  (analog demodulation)
+  - MOT Slide Show decoding (DAB)
+  - improved log file
+  - command line parameters
+
+0.9.2
+  - Time synchronization acquisition algorithm improved
+  - Channel estimation: wiener filter with adaptation
+  - Log file support
+  - Improved metric for MLC decoder
+  - Improved (sample) frequency offset tracking, better averaging functions
+  - Bug fix in Windows sound interface
+
+0.9.1
+  Initial version

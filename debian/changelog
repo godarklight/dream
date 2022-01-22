@@ -1,0 +1,11 @@
+dream (2.2-2) unstable; urgency=medium
+
+  * xHE-AAC supported
+
+ -- Rafael Diniz <rafael@riseup.net>  Tue, 22 Sep 2020 22:56:00 -0300
+
+dream (2.2-1) unstable; urgency=medium
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- root <jcable@users.sourceforge.net>  Mon, 21 Jan 2019 06:55:07 +0000

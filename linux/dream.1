@@ -1,0 +1,153 @@
+.TH DREAM 1 LOCAL
+.SH NAME 
+
+dream - Digital Radio Mondiale and AM software defined radio
+
+.SH SYNTAX 
+
+.B dream <options>
+
+.SH AVAILABILITY 
+
+Tested on Debian, Ubuntu, Windows and OSX Snow Leopard
+
+.SH DESCRIPTION 
+
+Description: a DRM (Digital Radio Mondiale) and AM Software Defined Radio
+Digital Radio Mondiale (DRM) is the digital radio standard for the
+long-, medium- and short-wave ranges. The standard was formed by a
+consortium in co-operation with the International Telecommunication
+Union (ITU).  For more information visit www.drm.org.  Dream uses the
+sound card as the input and output device. A long, medium and short wave
+front-end with an intermediate frequency (IF) between 5 kHz and 15 kHz
+is used to receive the DRM signal. Any commercial front-end with an IF
+of 455 kHz should be usable by adding a 455 kHz to 12 kHz adaptor
+(assuming the receiver bandwidth is sufficient for a DRM signal).
+
+.SH OPTIONS 
+
+.IP "-t, --transmitter"
+DRM transmitter mode
+.IP "-p, --flipspectrum"
+flip input spectrum
+.IP "-i <n>, --mlciter <n>"
+number of MLC iterations (allowed range: 0...4 default: 1)
+.IP "-s <r>, --sampleoff <r>"
+sample rate offset initial value [Hz] (allowed range: -200.0...200.0)
+.IP "-m, --muteaudio"
+mute audio output
+.IP "-f <s>, --fileio <s>"
+disable sound card, use file <s> instead
+.IP "-w <s>, --writewav <s>"
+write output to wave file
+.IP "-S <r>, --fracwinsize <r>"
+freq. acqu. search window size [Hz]
+.IP "-E <r>, --fracwincent <r>"
+freq. acqu. search window center [Hz]
+.IP "-F, --filter"
+apply bandpass filter
+.IP "-D, --modmetric"
+enable modified metrics
+.IP "-c <n>, --inchansel <n>"
+input channel selection
+.nf
+0: left channel; 1: right channel;   2: mix both channels (default)
+3: I / Q input positive;             4: I / Q input negative
+5: I / Q input positive (0 Hz IF);   6: I / Q input negative (0 Hz IF)
+.fi
+.IP "-u <n>, --outchansel <n>"
+output channel selection
+.nf
+0: L -> L, R -> R (default);   1: L -> L, R muted;   2: L muted, R -> R
+3: mix -> L, R muted;          4: L muted, mix -> R
+.fi
+.IP "-e <n>, --decodeepg <n>"
+enable/disable epg decoding (0: off; 1: on)
+.IP "-g <n>, --enablelog <n>"
+enable/disable logging (0: no logging; 1: logging
+.IP "-r <n>, --frequency <n>"
+set frequency [kHz] for log file
+.IP "-l <n>, --logdelay <n>"
+delay start of logging by <n> seconds, allowed range: 0...3600)
+.IP "-L <s>, --schedule <s>"
+read DRMLogger style ini file and obey it
+.IP "-y <n>, --sysevplotstyle <n>"
+set style for main plot
+.br
+0: blue-white (default);   1: green-black;   2: black-grey
+.IP "--enablepsd <n>"
+if 0 then only measure PSD when RSCI in use otherwise always measure it
+.IP "--mdiout <s>"
+MDI out address format [IP#:]IP#:port (for Content Server)
+.IP "--mdiin  <s>"
+MDI in address (for modulator) [[IP#:]IP:]port
+.IP "--rsioutprofile <s>"
+MDI/RSCI output profile: A|B|C|D|Q|M
+.IP "--rsiout <s>"
+MDI/RSCI output address format [IP#:]IP#:port (prefix address with 'p' to enable the simple PFT)
+.IP "--rsiin <s>"
+RSCI/MDI status input address format [[IP#:]IP#:]port
+.IP "--rciout <s>"
+RSCI Control output format IP#:port
+.IP "--rciin <s>"
+RSCI Control input address number format [IP#:]port
+.IP "--rsirecordprofile <s>"
+RSCI recording profile: A|B|C|D|Q|M
+.IP "--rsirecordtype <s>"
+RSCI recording file type: raw|ff|pcap
+.IP "--recordiq <n>"
+enable/disable recording an I/Q file
+.IP "--permissive <b>"
+enable decoding of bad RSCI frames (0: off; 1: on)
+.IP "-R <n>, --samplerate <n>"
+set audio and signal sound card sample rate [Hz]
+.IP "--audsrate <n>"
+set audio sample rate for playback [Hz], allowed range 8000 - 192000)
+.IP "--sigsrate <n>"
+set sample rate for I/F and IQ signal processing [Hz], allowed values 24000, 48000, 96000, 192000)
+.IP "-I <s>, --snddevin <s>"
+set sound in device
+.IP "-O <s>, --snddevout <s>"
+set sound out device
+.IP "-M <n>, --hamlib-model <n>"
+set Hamlib radio model ID
+.IP "-C <s>, --hamlib-config <s>"
+set Hamlib config parameter
+.IP "-T, --ensmeter"
+enable S-Meter
+.IP "--test <n>"
+if 1 then some test setup will be done
+.IP "-h, -?, --help"
+this help text
+
+.SH EXAMPLES 
+
+dream -p --sampleoff -0.23 -i 2 -r 6140 --rsiout 127.0.0.1:3002
+
+dream -t
+
+.SH AUTHOR 
+
+Dream is maintained by David Flamand and Julian Cable.
+
+Quality Assurance and user testing is provided by Simone Stoeppler
+
+This man page by Julian Cable
+
+.SH HISTORY 
+The Dream software development was started at
+.I "Darmstadt University of Technology"
+at the Institute of Communication Technology by
+.I "Volker Fischer"
+and
+.I "Alexander Kurpiers"
+in 2001-2005. The core digital signal processing and most of the GUI were the result of this development.
+
+.SH FILES 
+
+Dream creates an ini file in the directory it is run from. Sub folders for AFS, EPG and MOT files are also created.
+
+.SH BUGS 
+
+Probably
+

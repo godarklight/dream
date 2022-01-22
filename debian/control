@@ -1,0 +1,17 @@
+Source: dream
+Section: hamradio
+Priority: optional
+Maintainer: Rafael Diniz <rafael@riseup.net>
+Build-Depends: debhelper (>=9), make, g++, qt5-default, libqwt-qt5-dev, libfftw3-dev, libopus-dev, libsndfile-dev, libasound2-dev, libgps-dev, libpcap-dev, libhamlib-dev, libspeexdsp-dev, libqt5svg5-dev, zlib1g-dev
+Standards-Version: 3.9.8
+Homepage: https://sourceforge.net/p/drm
+#Vcs-Git: https://anonscm.debian.org/collab-maint/dream.git
+#Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/dream.git
+
+Package: dream
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libfdk-aac2
+Description: A software radio for AM and Digital Radio Mondiale (DRM)
+ Dream is a software implementation of a Digital Radio Mondiale (DRM) receiver.
+ With Dream, DRM broadcasts can be received with an SDR dongle or 
+ a modified analog receiver (SW, MW, LW) and a PC with a sound card.
