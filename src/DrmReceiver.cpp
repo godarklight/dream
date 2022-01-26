@@ -37,9 +37,6 @@
 #include "util/Utilities.h"
 #include "util/FileTyper.h"
 
-#include "sound/sound.h"
-#include "sound/soundnull.h"
-#include "sound/audiofilein.h"
 #ifdef QT_MULTIMEDIA_LIB
 # include <QAudioDeviceInfo>
 #endif
@@ -1336,7 +1333,7 @@ void CDRMReceiver::SetFrequency(int iNewFreqkHz)
     }
 
     if(pTuner)
-        pTuner->SetFrequency(iNewFreqkHz);
+        pTuner->SetFrequency(iNewFreqkHz + int(Parameters.FrontEndParameters.rTunerFrequencyOffset));
 #if 0
     {
         FCD_MODE_ENUM fme;
@@ -1623,6 +1620,8 @@ CDRMReceiver::LoadSettings()
 
     FrontEndParameters.rIFCentreFreq = s.Get("FrontEnd", "ifcentrefrequency", (_REAL(DEFAULT_SOUNDCRD_SAMPLE_RATE) / 4));
 
+    FrontEndParameters.rTunerFrequencyOffset = s.Get("FrontEnd", "tunerfreqoffset", 0.0);
+
     /* Latitude string (used to be just for log file) */
     double latitude, longitude;
     latitude = s.Get("GPS", "latitude", s.Get("Logfile", "latitude", 1000.0));
@@ -1767,6 +1766,8 @@ CDRMReceiver::SaveSettings()
     s.Put("FrontEnd", "calfactoram", int(Parameters.FrontEndParameters.rCalFactorAM));
 
     s.Put("FrontEnd", "ifcentrefrequency", int(Parameters.FrontEndParameters.rIFCentreFreq));
+
+    s.Put("FrontEnd", "tunerfreqoffset", int(Parameters.FrontEndParameters.rTunerFrequencyOffset));
 
     if (pTuner)
         pTuner->SaveSettings(s);

@@ -41,7 +41,7 @@
 #include "IQInputFilter.h"
 #include "UpsampleFilter.h"
 #include "matlib/MatlibSigProToolbox.h"
-#include "../tuner.h"
+#include "tuner.h"
 
 using namespace std;
 

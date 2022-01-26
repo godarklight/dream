@@ -178,7 +178,7 @@ void CSoapySDRIn::Enumerate(std::vector<std::string>& names, std::vector<std::st
     for( unsigned int i = 0; i < results.size(); ++i)
     {
         std::stringstream ss;
-        ss << "SoapySDR device #" << i <<": ";
+        ss << "SoapySDR device #" << i;
         names.push_back(ss.str());
 
         ss.str("");

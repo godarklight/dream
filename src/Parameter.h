@@ -791,7 +791,7 @@ public:
     CFrontEndParameters():
             eSMeterCorrectionType(S_METER_CORRECTION_TYPE_CAL_FACTOR_ONLY), rSMeterBandwidth(10000.0),
             rDefaultMeasurementBandwidth(10000.0), bAutoMeasurementBandwidth(true), rCalFactorAM(0.0),
-            rCalFactorDRM(0.0), rIFCentreFreq(12000.0)
+            rCalFactorDRM(0.0), rIFCentreFreq(12000.0), rTunerFrequencyOffset(0.0)
     {}
     CFrontEndParameters(const CFrontEndParameters& p):
             eSMeterCorrectionType(p.eSMeterCorrectionType), rSMeterBandwidth(p.rSMeterBandwidth),
@@ -820,6 +820,7 @@ public:
     _REAL rCalFactorAM;
     _REAL rCalFactorDRM;
     _REAL rIFCentreFreq;
+    _REAL rTunerFrequencyOffset; // tuner frequency - signal centre frequency. Negative => tune front end below desired RF frequency
 
 };
 
