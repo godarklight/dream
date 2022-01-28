@@ -67,6 +67,12 @@ bool CSoapySDRIn::Init(int iNewSampleRate, int iNewBufferSize, bool bNewBlocking
 
     ApplyConfigString();
 
+    if (pStream != nullptr)
+    {
+        pDevice->deactivateStream(pStream);
+        pDevice->closeStream(pStream);
+    }
+
     pStream = pDevice->setupStream(SOAPY_SDR_RX, SOAPY_SDR_CS16);
 
     int res = pDevice->activateStream(pStream);

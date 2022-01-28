@@ -257,6 +257,7 @@ unix:!cross_compile {
        CONFIG += speexdsp
       }
     }
+    exists(/usr/include/SoapySDR) | \
     exists(/usr/local/include/SoapySDR) {
        CONFIG += soapysdr
     }

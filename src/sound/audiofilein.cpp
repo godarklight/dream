@@ -60,7 +60,7 @@ CAudioFileIn::SetFileName(const string& strFileName)
     size_t p = strInFileName.rfind('.');
     if (p != string::npos)
         ext = strInFileName.substr(p+1);
-	eFmt = fmt_other;
+    eFmt = fmt_other;
     if (ext == "txt") eFmt = fmt_txt;
     if (ext == "TXT") eFmt = fmt_txt;
     if (ext.substr(0,2) == "iq") eFmt = fmt_raw_stereo;

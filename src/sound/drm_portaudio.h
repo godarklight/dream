@@ -74,7 +74,7 @@ public:
     virtual 		~CPaIn();
     virtual void Enumerate(std::vector<std::string>& names, std::vector<std::string>& descriptions, std::string& defaultDevice)
     {
-        hw.Enumerate(names, descriptions);
+        hw.Enumerate(names, descriptions, defaultDevice);
     }
     virtual void	SetDev(std::string sNewDevice)
     {
@@ -105,7 +105,7 @@ public:
     virtual 			~CPaOut();
     virtual void	Enumerate(std::vector<std::string>& names, std::vector<std::string>& descriptions, std::string& defaultOutput)
     {
-        hw.Enumerate(names, descriptions);
+        hw.Enumerate(names, descriptions, defaultOutput);
     }
     virtual void	SetDev(std::string sNewDevice)
     {

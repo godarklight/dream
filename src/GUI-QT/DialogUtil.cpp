@@ -69,6 +69,7 @@
 # include <alsa/version.h>
 #endif
 #ifdef USE_PORTAUDIO
+# include <portaudio.h>
 #endif
 #ifdef USE_PULSEAUDIO
 # include <pulse/pulseaudio.h>
