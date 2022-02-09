@@ -48,7 +48,7 @@
 #include <qwt_thermo.h> /* S-Meter */
 
 class CRig;
-typedef int rig_model_t;
+//typedef int rig_model_t;
 
 /* Definitions ****************************************************************/
 

@@ -172,19 +172,19 @@ void CTagItemDecoderRgps::DecodeTag(CVector<_BINARY>& vecbiTag, const int iLen)
         break;
     case 1:
         gps_data.set=STATUS_SET;
-        gps_data.status=1;
+        gps_data.fix.status=1;
         break;
     case 2:
         gps_data.set=STATUS_SET;
-        gps_data.status=2;
+        gps_data.fix.status=2;
         break;
     case 3:
         gps_data.set=STATUS_SET;
-        gps_data.status=0;
+        gps_data.fix.status=0;
         break;
     case 0xff:
         gps_data.set=0;
-        gps_data.status=0;
+        gps_data.fix.status=0;
         break;
     default:
         cerr << "error decoding rgps" << endl;
@@ -255,7 +255,7 @@ void CTagItemDecoderRgps::DecodeTag(CVector<_BINARY>& vecbiTag, const int iLen)
         else
             unsetenv("TZ");
 #endif
-        gps_data.fix.time = t;
+        gps_data.fix.time.tv_sec = t;
         gps_data.set |= TIME_SET;
     }
 

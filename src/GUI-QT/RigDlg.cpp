@@ -58,7 +58,7 @@ RigDlg::RigDlg(CRig& nrig, QWidget* parent) :
 	none->setData(0, Qt::UserRole, RIG_MODEL_NONE);
     for(map<rig_model_t,CHamlib::SDrRigCaps>::const_iterator i=r.begin(); i!=r.end(); i++)
     {
-		rig_model_t model_num = i->first;
+        rig_model_t model_num = i->first;
         CHamlib::SDrRigCaps rc =  i->second;
         QTreeWidgetItem* mfr, *model;
         if(rc.strManufacturer=="" || rc.strModelName=="")

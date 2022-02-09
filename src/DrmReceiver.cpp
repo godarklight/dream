@@ -36,6 +36,7 @@
 #include "util/Settings.h"
 #include "util/Utilities.h"
 #include "util/FileTyper.h"
+#include "tuner.h"
 
 #ifdef QT_MULTIMEDIA_LIB
 # include <QAudioDeviceInfo>

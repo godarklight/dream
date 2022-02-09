@@ -1,4 +1,5 @@
 #include "soundinterfacefactory.h"
+#include "SoundInInterfaceComposite.h"
 
 /******************************************************************************\
  * British Broadcasting Corporation
@@ -81,27 +82,31 @@ CSoundInterfaceFactory::CSoundInterfaceFactory()
 
 CSoundInInterface * CSoundInterfaceFactory::CreateSoundInInterface()
 {
+    CSoundInInterfaceComposite *pSoundInInterfaceComposite = new CSoundInInterfaceComposite();
 
 #if defined(USE_SOAPYSDR)
-    return new CSoapySDRIn();
-#elif defined(WIN32) && !defined(USE_PORTAUDIO) && !defined(USE_JACK) && !defined(QT_MULTIMEDIA_LIB)
+    pSoundInInterfaceComposite->AddInterface(new CSoapySDRIn());
+#endif
+
+#if defined(WIN32) && !defined(USE_PORTAUDIO) && !defined(USE_JACK) && !defined(QT_MULTIMEDIA_LIB)
 /* mmsystem sound interface */
-    return new CSoundInMMSystem();
+    pSoundInInterfaceComposite->AddInterface(new CSoundInMMSystem());
 #elif defined(USE_ALSA)
-    return new CSoundInAlsa();
+    pSoundInInterfaceComposite->AddInterface(new CSoundInAlsa());
 #elif defined (USE_JACK)
-    return new CSoundInJack();
+    pSoundInInterfaceComposite->AddInterface(new CSoundInJack());
 #elif defined (USE_PULSEAUDIO)
-    return new CSoundInPulse();
+    pSoundInInterfaceComposite->AddInterface(new CSoundInPulse());
 #elif defined (USE_PORTAUDIO)
-    return new CPaIn();
+    pSoundInInterfaceComposite->AddInterface(new CPaIn());
 #elif defined(USE_OPENSL)
-    return new COpenSLESIn();
+    pSoundInInterfaceComposite->AddInterface(new COpenSLESIn());
 // defined(QT_MULTIMEDIA_LIB) || (!defined(USE_OSS) && !defined(USE_ALSA) && !defined(USE_JACK) && !defined(USE_PULSEAUDIO) && !defined(USE_PORTAUDIO) && !defined(USE_OPENSL))
 #else
-    return new CSoundInNull();
+    pSoundInInterfaceComposite->AddInterface(new CSoundInNull());
 # endif
 
+    return pSoundInInterfaceComposite;
 
 }
 

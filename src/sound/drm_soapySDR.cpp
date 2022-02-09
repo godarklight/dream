@@ -15,20 +15,32 @@
 #include "../Parameter.h"
 #include "../util/Settings.h"
 
+// Static members
+int CSoapySDRIn::iLastTunedFrequency = 0;
+
 // Constructor(s)
-CSoapySDRIn::CSoapySDRIn() : currentDev(""), iSampleRate(96000), iBufferSize(0), iFrequency(0), pDevice(nullptr), pStream(nullptr)
+CSoapySDRIn::CSoapySDRIn() : currentDev(""), iSampleRate(96000), iBufferSize(0), iFrequency(iLastTunedFrequency), pDevice(nullptr), pStream(nullptr)
 {
-    //pFile = fopen("raw_input.iq", "w");
+    cout<<"CSoapySDRIn::ctor"<<endl;
 }
 
 CSoapySDRIn::~CSoapySDRIn()
 {
-    //fclose(pFile);
+    CloseDevice();
+}
+
+CTuner *CSoapySDRIn::GetTuner()
+{
+    return this;
 }
 
 // CSoundInInterface methods
 bool CSoapySDRIn::Init(int iNewSampleRate, int iNewBufferSize, bool bNewBlocking)
 {
+    cout<<"CSoapySDRIn::Init()"<<endl;
+    // Close device if currently open
+    CloseDevice();
+
     SoapySDR::KwargsList results = SoapySDR::Device::enumerate();
 
 
@@ -56,6 +68,7 @@ bool CSoapySDRIn::Init(int iNewSampleRate, int iNewBufferSize, bool bNewBlocking
     fprintf(stdout, "Setting sample rate to %d\n", iSampleRate);
     pDevice->setSampleRate(SOAPY_SDR_RX, 0, iSampleRate);
 
+    fprintf(stdout, "Setting frequency to %d\n", iFrequency);
     pDevice->setFrequency(SOAPY_SDR_RX, 0, iFrequency);
 
     iBufferSize = iNewBufferSize;
@@ -67,12 +80,6 @@ bool CSoapySDRIn::Init(int iNewSampleRate, int iNewBufferSize, bool bNewBlocking
 
     ApplyConfigString();
 
-    if (pStream != nullptr)
-    {
-        pDevice->deactivateStream(pStream);
-        pDevice->closeStream(pStream);
-    }
-
     pStream = pDevice->setupStream(SOAPY_SDR_RX, SOAPY_SDR_CS16);
 
     int res = pDevice->activateStream(pStream);
@@ -80,6 +87,7 @@ bool CSoapySDRIn::Init(int iNewSampleRate, int iNewBufferSize, bool bNewBlocking
         fprintf(stderr, "Activating stream failed");
     else
         fprintf(stderr, "Activating stream succeeded\n");
+
     return true;
 
 }
@@ -133,39 +141,56 @@ void CSoapySDRIn::SaveSettings(CSettings& settings)
 
 bool CSoapySDRIn::Read(CVector<short>& psData, CParameter &Parameter)
 {
+    if (!pDevice || !pStream)
+        return true; // true=>failure
+
     void *buffs[] = {&psData[0]};
     int flags;
     long long time_ns=0;
     int elementsRemaining = iBufferSize/2;
     while (elementsRemaining>0)
     {
+        if (!pDevice || !pStream) // these can become false during the loop
+            return true;
         buffs[0]={&psData[iBufferSize-2*elementsRemaining]};
         int elementsRead = pDevice->readStream(pStream, buffs, size_t(elementsRemaining), flags, time_ns, 1e9); // divide by 2 because complex
         elementsRemaining -= elementsRead;
     }
     //fwrite(&psData[0], 2, size_t(iBufferSize), pFile);
-
-    _REAL r = -pDevice->getGain(SOAPY_SDR_RX, 0); // negative because the amount of gain should be subtracted from the signal level to get the input power. For SDRPlay, need to use the right version of SoapySDRPlay for this to work
-    Parameter.Lock();
-    r += Parameter.rSigStrengthCorrection;
-    Parameter.SigStrstat.addSample(r);
-    Parameter.Unlock();
+    if (pDevice)
+    {
+        _REAL r = -pDevice->getGain(SOAPY_SDR_RX, 0); // negative because the amount of gain should be subtracted from the signal level to get the input power. For SDRPlay, need to use the right version of SoapySDRPlay for this to work
+        Parameter.Lock();
+        r += Parameter.rSigStrengthCorrection;
+        Parameter.SigStrstat.addSample(r);
+        Parameter.Unlock();
+    }
     //emit sigstr(r);
-
     return false; // false=OK, true=bad
+}
+
+void CSoapySDRIn::CloseDevice()
+{
+
+    SoapySDR::Device *pOldDevice = pDevice;
+    SoapySDR::Stream *pOldStream = pStream;
+    pDevice = nullptr;
+    pStream = nullptr;
+
+    if (pOldDevice != nullptr)
+    {
+       if (pOldStream != nullptr)
+       {
+           pOldDevice->deactivateStream(pOldStream, 0,0);
+           pOldDevice->closeStream(pOldStream);
+       }
+       SoapySDR::Device::unmake(pOldDevice);
+    }
+
 }
 
 void CSoapySDRIn::Close()
 {
-    fprintf(stderr, "Closing device\n");
-    if (pDevice)
-    {
-       pDevice->deactivateStream(pStream, 0,0);
-       pDevice->closeStream(pStream);
-       SoapySDR::Device::unmake(pDevice);
-       pDevice = nullptr;
-    }
-
 }
 
 std::string	CSoapySDRIn::GetVersion()
@@ -212,7 +237,7 @@ void CSoapySDRIn::SetDev(std::string sNewDev)
 void CSoapySDRIn::SetFrequency(int freq)
 {
     iFrequency = freq * 1000;
-    fprintf(stderr, "CSoapySDRIn::SetFrequency(%d)\n", iFrequency);
     if (pDevice)
         pDevice->setFrequency(SOAPY_SDR_RX, 0, iFrequency);
+    iLastTunedFrequency = iFrequency;
 }

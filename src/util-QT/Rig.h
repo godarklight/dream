@@ -45,9 +45,9 @@ public:
         virtual void SaveSettings(CSettings&);
     virtual void SetFrequency(int);
 #ifdef HAVE_LIBHAMLIB
-	void GetRigList(map<rig_model_t,CHamlib::SDrRigCaps>& r) { Hamlib.GetRigList(r); }
-	rig_model_t GetHamlibModelID() { return Hamlib.GetHamlibModelID(); }
-	void SetHamlibModelID(rig_model_t r) { Hamlib.SetHamlibModelID(r); }
+    void GetRigList(map<rig_model_t,CHamlib::SDrRigCaps>& r) { Hamlib.GetRigList(r); }
+    rig_model_t GetHamlibModelID() { return Hamlib.GetHamlibModelID(); }
+    void SetHamlibModelID(rig_model_t r) { Hamlib.SetHamlibModelID(r); }
 	void SetEnableModRigSettings(bool b) { Hamlib.SetEnableModRigSettings(b); }
 	void GetPortList(map<std::string,std::string>& ports) { Hamlib.GetPortList(ports); }
 	std::string GetComPort() { return Hamlib.GetComPort(); }

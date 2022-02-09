@@ -588,7 +588,8 @@ HEADERS += \
     src/sourcedecoders/caudioreverb.h \
     src/sound/drm_soapySDR.h \
     src/tuner.h \
-    src/sound/soundinterfacefactory.h
+    src/sound/soundinterfacefactory.h \
+    src/sound/SoundInInterfaceComposite.h
 SOURCES += \
     src/AMDemodulation.cpp \
     src/AMSSDemodulation.cpp \
@@ -707,7 +708,8 @@ SOURCES += \
     src/sourcedecoders/caudioreverb.cpp \
     src/sound/drm_soapySDR.cpp \
     src/tuner.cpp \
-    src/sound/soundinterfacefactory.cpp
+    src/sound/soundinterfacefactory.cpp \
+    src/sound/SoundInInterfaceComposite.cpp
 
 contains(QT,core) {
     HEADERS += \

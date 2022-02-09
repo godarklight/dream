@@ -882,7 +882,7 @@ void CReceiveData::emitRSCIData(CParameter& Parameters)
 CTuner * CReceiveData::GetTuner()
 {
     fprintf(stderr, "CReceiveData::GetTuner() called, pSound=%x\n", pSound);
-    return dynamic_cast<CTuner *>(pSound);
+    return pSound->GetTuner();
 }
 
 

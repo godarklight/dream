@@ -27,14 +27,18 @@ public:
     virtual void SetFrequency(int);
     virtual void LoadSettings(CSettings&);
     virtual void SaveSettings(CSettings&);
+    virtual CTuner * GetTuner();
 
 protected:
 
     void ApplyConfigString();
+    void CloseDevice();
     std::string currentDev;
     int				iSampleRate;
     int				iBufferSize;
     int             iFrequency;
+
+    static int      iLastTunedFrequency;
 
     SoapySDR::Device *pDevice;
     SoapySDR::Stream *pStream;
