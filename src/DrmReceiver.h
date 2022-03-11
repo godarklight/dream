@@ -187,9 +187,10 @@ public:
     void					SetAMDemodType(EDemodType);
     void					SetAMFilterBW(int iBw);
     void					SetAMDemodAcq(_REAL rNewNorCen);
-    void	 				SetTuner(CTuner* t) {
-        pTuner=t;
+    void                    SetRig(CTuner *p) {
+        pRig=p;
     }
+
     void	 				SetFrequency(int);
     int		 				GetFrequency() {
         return Parameters.GetFrequency();
@@ -446,6 +447,7 @@ protected:
     int						iBwFM;
     time_t					time_keeper;
     CTuner*					pTuner;
+    CTuner*                 pRig;
 
     CPlotManager			PlotManager;
     std::string					rsiOrigin;

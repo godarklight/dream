@@ -49,6 +49,7 @@
 #ifdef HAVE_LIBGPS
 # include <gps.h>
 #else
+#   define GPSD_API_MAJOR_VERSION 10
     typedef struct timespec timespec_t;
     struct gps_fix_t {
     timespec_t time;

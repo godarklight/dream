@@ -755,8 +755,13 @@ void systemevalDlg::UpdateGPS(CParameter& Parameters)
     if((gps.set&STATUS_SET)==0) {
         LEDGPS->SetLight(CMultColorLED::RL_RED);
     } else {
-
+#if GPSD_API_MAJOR_VERSION >= 10
         if(gps.fix.status==0)
+#else
+        if(gps.status==0)
+#endif
+
+
             LEDGPS->SetLight(CMultColorLED::RL_YELLOW);
         else
             LEDGPS->SetLight(CMultColorLED::RL_GREEN);
@@ -789,7 +794,11 @@ void systemevalDlg::UpdateGPS(CParameter& Parameters)
     if (gps.set&TIME_SET)
     {
         struct tm * p_ts;
+#if GPSD_API_MAJOR_VERSION >= 9
         time_t tt = time_t(gps.fix.time.tv_sec);
+#else
+        time_t tt = time_t(gps.fix.time);
+#endif
         p_ts = gmtime(&tt);
         QChar fill('0');
         qStrTime = QString("UTC: %1/%2/%3 %4:%5:%6  ")

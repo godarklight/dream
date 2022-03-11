@@ -114,7 +114,7 @@ main(int argc, char **argv)
             CRx rx(DRMReceiver);
 
 #ifdef HAVE_LIBHAMLIB
-            DRMReceiver.SetTuner(&rig);
+            DRMReceiver.SetRig(&rig);
 
 			if(DRMReceiver.GetDownstreamRSCIOutEnabled())
 			{

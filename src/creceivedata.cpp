@@ -539,7 +539,7 @@ void CReceiveData::InitInternal(CParameter& Parameters)
     /* Get signal sample rate */
     iSampleRate = Parameters.GetSigSampleRate();
     iUpscaleRatio = Parameters.GetSigUpscaleRatio();
-    iDownscaleRatio = 2; // TODO read from params
+    iDownscaleRatio = Parameters.GetSigDownscaleRatio();
     Parameters.Unlock();
 
     const int iOutputBlockAlignment = iOutputBlockSize & 3;

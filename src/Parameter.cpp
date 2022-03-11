@@ -144,7 +144,12 @@ CParameter::CParameter():
     GenerateRandomSerialNumber();
     CellMappingTable.MakeTable(eRobustnessMode, eSpectOccup, iSigSampleRate);
     gps_data.set=0;
-    gps_data.fix.status=0;
+#if GPSD_API_MAJOR_VERSION >= 10
+        gps_data.fix.status=0;
+#else
+        gps_data.status=0;
+#endif
+
 #ifdef HAVE_LIBGPS
     gps_data.gps_fd = -1;
 #endif

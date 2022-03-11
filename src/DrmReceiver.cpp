@@ -69,7 +69,7 @@ CDRMReceiver::CDRMReceiver(CSettings* nPsettings) : CDRMTransceiver(),
     rInitResampleOffset((_REAL) 0.0),
     iBwAM(10000), iBwLSB(5000), iBwUSB(5000), iBwCW(150), iBwFM(6000),
     time_keeper(0),
-    pTuner(nullptr),
+    pTuner(nullptr), pRig(nullptr),
     PlotManager(), iPrevSigSampleRate(0),Parameters(*(new CParameter())), pSettings(nPsettings)
 {
     Parameters.SetReceiver(this);
@@ -192,11 +192,15 @@ CDRMReceiver::SetInputDevice(string s)
         SyncUsingPil.SetSyncInput(false);
         TimeSync.SetSyncInput(false);
         ReceiveData.SetSoundInterface(device); // audio input
-        CTuner *pTuner = ReceiveData.GetTuner();
-        fprintf(stderr, "Read pTuner = %x\n", pTuner);
+        CTuner *pSoundInTuner = ReceiveData.GetTuner();
+        fprintf(stderr, "Read pTuner = %x\n", pSoundInTuner);
+        if (pSoundInTuner) // sound in interface can be tuned (i.e. it's an SDR)
+                pTuner = pSoundInTuner;
+        else // sound-in interface can't be tuned. Send frequency changes to Hamlib instead (if present)
+                pTuner = pRig;
+
         if (pTuner)
         {
-                SetTuner(pTuner);
                 pTuner->LoadSettings(*pSettings);
         }
         break;

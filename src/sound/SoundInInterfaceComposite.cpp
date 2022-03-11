@@ -1,12 +1,18 @@
 #include "SoundInInterfaceComposite.h"
 
+#include <iostream>
+#include <cstdio>
+using namespace std;
+
 CSoundInInterfaceComposite::CSoundInInterfaceComposite():
     pCurrentInterface(nullptr)
 {
+    cout<<"CSoundInInterfaceComposite::ctor()"<<endl;
 }
 
 CSoundInInterfaceComposite::~CSoundInInterfaceComposite()
 {
+    cout<<"CSoundInInterfaceComposite::dtor()"<<endl;
     for (CSoundInInterface *pInterface: vecSoundInInterfaces)
         delete pInterface;
     vecSoundInInterfaces.clear();
@@ -29,6 +35,7 @@ void CSoundInInterfaceComposite::AddInterface(CSoundInInterface *pInterface)
 
 bool CSoundInInterfaceComposite::Init(int iSampleRate, int iNewBufferSize, bool bNewBlocking)
 {
+    cout<<"CSoundInInterfaceComposite::Init()"<<endl;
     if (pCurrentInterface != nullptr)
         return pCurrentInterface->Init(iSampleRate, iNewBufferSize, bNewBlocking);
     else {
@@ -48,6 +55,7 @@ bool CSoundInInterfaceComposite::Read(CVector<short>& psData, CParameter& Parame
 
 void     CSoundInInterfaceComposite::Close()
 {
+    cout<<"CSoundInInterfaceComposite::Close()"<<endl;
     if (pCurrentInterface != nullptr)
         pCurrentInterface->Close();
 
@@ -94,6 +102,7 @@ std::string	CSoundInInterfaceComposite::GetDev()
 
 void CSoundInInterfaceComposite::SetDev(std::string sNewDev)
 {
+        cout<<"CSoundInInterfaceComposite::SetDev("<<sNewDev<<")"<<endl;
     for (CSoundInInterface *pInterface: vecSoundInInterfaces)
     {
         std::vector<std::string> interfaceNames;
