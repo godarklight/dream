@@ -345,6 +345,7 @@ protected:
     void					DetectAcquiFAC();
     void					DetectAcquiSymbol();
     void					saveSDCtoFile();
+    void                    touchWatchdogFile();
 
     /* Modules */
     CReceiveData			ReceiveData;
@@ -448,6 +449,7 @@ protected:
     time_t					time_keeper;
     CTuner*					pTuner;
     CTuner*                 pRig;
+    string                  strWatchdogFilename;
 
     CPlotManager			PlotManager;
     std::string					rsiOrigin;

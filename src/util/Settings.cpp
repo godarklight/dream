@@ -374,6 +374,12 @@ CSettings::ParseArguments(int argc, char **argv)
 			continue;
 		}
 
+        if (GetStringArgument(argc, argv, i, "--watchdogfilename", "--watchdogfilename", strArgument))
+        {
+            Put("Receiver", "watchdogfilename", strArgument);
+            continue;
+        }
+
 		/* Frequency acquisition search window size ------------------------- */
 		if (GetNumericArgument(argc, argv, i, "-S", "--fracwinsize", -1,
 							   MAX_FREQ_AQC_SE_WIN_SZ, rArgument))

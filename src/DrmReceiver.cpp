@@ -37,6 +37,7 @@
 #include "util/Utilities.h"
 #include "util/FileTyper.h"
 #include "tuner.h"
+#include <fstream>
 
 #ifdef QT_MULTIMEDIA_LIB
 # include <QAudioDeviceInfo>
@@ -946,6 +947,8 @@ CDRMReceiver::process()
     /* Decoding */
     while (bEnoughData) // TODO break if stop requested
     {
+        touchWatchdogFile();
+
         /* Init flag */
         bEnoughData = false;
 
@@ -1061,6 +1064,14 @@ void CDRMReceiver::updatePosition()
     }
     (void)result;
 #endif
+}
+
+void CDRMReceiver::touchWatchdogFile()
+{
+    if (strWatchdogFilename.length()>0)
+    {
+        std::ofstream f(strWatchdogFilename, ofstream::trunc);
+    }
 }
 
 void
@@ -1652,6 +1663,8 @@ CDRMReceiver::LoadSettings()
 
     bool permissive = s.Get("command", "permissive", false);
     Parameters.lenient_RSCI = permissive;
+
+    strWatchdogFilename = s.Get("Receiver", "watchdogfilename", string(""));
 
     Parameters.Unlock();
 }
